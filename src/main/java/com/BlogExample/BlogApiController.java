@@ -10,17 +10,13 @@ import java.util.List;
 
 @Controller
 public class BlogApiController {
-    private final BlogRepository blogRepository;
-
-    public BlogApiController(BlogRepository blogRepository){
-        this.blogRepository= blogRepository;
-    }
+    private final BlogService blogService;
 
     @PostMapping("/api/articles")
-    public ResponseEntity<Article> add(@RequestBody List<AddArticleRequest> request){
-
-            return ResponseEntity.status(HttpStatus.OK)
-                    .
+    public ResponseEntity<Article> add(@RequestBody AddArticleRequest request){
+            Article savedArticle = blogService.save(request);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(savedArticle);
         }
 
     }
